@@ -33,3 +33,30 @@
 -----------
 자바스크립트 엔진이 코드를 실행하는 동안 **함수를 추적하는 공간**을 **콜스택**이라고 한다.<br>
 함수(`function`)의 호출(`call`)을 스택(`stack`)이라는 자료구조에 기록하는 것을 말한다.
+
+### 코드로 이해하기
+```javascript
+function foo() {
+    console.log("function foo is called");
+    throw new Error("oops!");
+}
+
+function bar() {
+    console.log("function bar is called");
+    foo();
+}
+
+function baz() {
+    console.log("function baz is called");
+    bar();
+}
+
+baz();
+```
+위의 코드에서 `foo`, `bar`, `baz` 세 가지의 함수를 작성했다.<br>
+세 함수의 역할은 다음과 같다.
+* `baz` : 함수 `bar`를 호출
+* `bar` : 함수 `foo`를 호출
+* `foo` : `error` 발생
+
+### 이미지로 이해하기
