@@ -60,3 +60,61 @@ baz();
 * `foo` : `error` 발생
 
 ### 이미지로 이해하기
+
+**1. 함수 baz 호출**
+
+<img width="400" alt="1" src="https://user-images.githubusercontent.com/74294301/115711775-ea91e900-a3ae-11eb-8aa9-f3a89239ad5d.PNG">
+
+함수 `baz`가 호출되고 콜스택에 함수 `baz`가 `push`된다.
+
+**2. 함수 bar 호출**
+
+<img width="400" alt="2" src="https://user-images.githubusercontent.com/74294301/115711778-eb2a7f80-a3ae-11eb-92f5-bee1efd15528.PNG">
+
+함수 `baz`가 함수 `bar`를 호출하면서 `bar`이 `push`된다.
+
+**3. 함수 foo 호출**
+
+<img width="400" alt="3" src="https://user-images.githubusercontent.com/74294301/115711780-ebc31600-a3ae-11eb-9d00-2a521699b8c2.PNG">
+
+함수 `bar`이 함수 `foo`를 호출하면서 `foo`가 `push`된다.
+
+**4. 최종 콜스택**
+
+<img width="400" alt="8" src="https://user-images.githubusercontent.com/74294301/115712939-617bb180-a3b0-11eb-90b6-d29ac9c7a127.PNG">
+
+모든 함수들이 스택에 `push`되고 아무 문제가 없으면 스택의 가장 위 스택프레임부터 차례로 `pop`된다.<br>
+그 후 스택에 아무 것도 있지 않은 상태가 되면 프로그램이 종료된다.<br>
+위의 예시에서는 스택 상단의 `foo` 함수에서 error가 발생해 프로그램이 비정상 종료된다.
+
+### 콘솔로 이해하기
+위의 자바스크립트 소스코드를 직접 실행해 보았다.
+<img width="650" alt="6" src="https://user-images.githubusercontent.com/74294301/115716922-abff2d00-a3b4-11eb-9802-20c240d9869b.PNG">
+
+각 `baz`, `bar`, `foo` 함수의 로그가 호출한 순서대로 찍혀있는 것을 확인할 수 있다.<br>
+`foo` 함수에서 에러가 발생한 이후의 로그를 보면 콜스택을 확인할 수 있다.
+
+<img width="800" alt="5" src="https://user-images.githubusercontent.com/74294301/115716577-46ab3c00-a3b4-11eb-8678-5f5944164f9b.PNG">
+
+최종 콜스택 이미지 그대로 로그가 `foo`, `bar`, `baz` 순서로 쌓여있는 것을 확인할 수 있다.
+
+### 스택 오버플로우
+스택 오버플로우는 이름 그대로 스택의 용량을 초과했을 때 발생하는 에러다.<br>
+이 에러는 생각보다 쉽게 일어날 수 있는데 특히 재귀호출에서 그렇다.<br>
+```javascript
+function overflow(){
+    overflow();
+}
+
+overflow();
+```
+`overflow` 함수는 어떤 값을 반환하지 않은 채 재귀호출을 반복하고 있다.<br>
+
+<img width="700" alt="8" src="https://user-images.githubusercontent.com/74294301/115721965-7c9eef00-a3b9-11eb-8020-08bb5634beca.PNG">
+
+**Maximum call stack size exceeded** 콜스택의 사이즈를 초과했다는 에러를 볼 수 있다.
+
+<img width="500" alt="7" src="https://user-images.githubusercontent.com/74294301/115721305-e36fd880-a3b8-11eb-8ac3-273e2cb9dac7.PNG">
+
+스택 오버플로우가 발생하면 더이상 함수를 호출하지 못하고 프로그램이 비정상 종료된다.
+
