@@ -20,6 +20,7 @@
 
 브라우저는 다음과 같은 요소들로 구성되어 있다.
 * 자바스크립트 엔진(`Javascript Engine`)
-* `Web APIs`
+* Web APIs
 * 콜백 큐(`Callback Queue`)
 * 이벤트 루프(`Event Loop`)
+
